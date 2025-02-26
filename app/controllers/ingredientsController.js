@@ -9,7 +9,7 @@ ingredientsRouter.get("/:id", function (req, res) {
     .findById(req.params.id)
     .then((data) => {
       if (!data[0]) {
-        return res.json([]);
+        return res.status(404).json({ message: "Ингредиент не найден" });
       }
 
       const result = {
@@ -30,10 +30,7 @@ ingredientsRouter.get("/", async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
 
-    const ingredients = await ingredientModel.getIngredients(
-      limit,
-      offset,
-    );
+    const ingredients = await ingredientModel.getIngredients(limit, offset);
     res.json(ingredients);
   } catch (err) {
     console.log("err", err);
@@ -46,8 +43,8 @@ ingredientsRouter.post("/", async (req, res) => {
     const ingredientName = req.body.ingredient;
     const ingredients = await ingredientModel.createIngredient(ingredientName);
     res.json({
-        message: 'Created ingredient',
-        id: ingredients.insertId,
+      message: "Ингредиент создан",
+      id: ingredients.insertId,
     });
   } catch (err) {
     console.log("err", err);
@@ -57,12 +54,12 @@ ingredientsRouter.post("/", async (req, res) => {
 
 ingredientsRouter.put("/:id", async (req, res) => {
   try {
-    const {id} = req.params;
-      const ingredientName = req.body.ingredient;
-    const ingredients = await ingredientModel.updateIngredient(id, ingredientName);
+    const { id } = req.params;
+    const ingredientName = req.body.ingredient;
+    await ingredientModel.updateIngredient(id, ingredientName);
     res.json({
-        message: 'Updated ingredient',
-        id: ingredients.insertId,
+      message: "Ингредиент обновлен",
+      id: id,
     });
   } catch (err) {
     console.log("err", err);
@@ -72,11 +69,11 @@ ingredientsRouter.put("/:id", async (req, res) => {
 
 ingredientsRouter.delete("/:id", async (req, res) => {
   try {
-    const {id} = req.params;
-    const ingredients = await ingredientModel.deleteIngredient(id);
+    const { id } = req.params;
+    await ingredientModel.deleteIngredient(id);
     res.json({
-        message: 'Deleted ingredient',
-        id: ingredients.insertId,
+      message: "Ингредиент удален",
+      id: id,
     });
   } catch (err) {
     console.log("err", err);
