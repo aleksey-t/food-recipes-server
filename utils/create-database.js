@@ -11,7 +11,7 @@ const dbConfig = {
 // SQL-запросы для создания базы данных и таблиц
 const sqlQueries = [
     `DROP DATABASE IF EXISTS \`recipes\`;`, // Удаляем базу данных, если она существует
-    `CREATE DATABASE IF NOT EXISTS \`recipes\` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;`, // Создаем базу данных
+    `CREATE DATABASE IF NOT EXISTS \`recipes\``, // Создаем базу данных
     `USE \`recipes\`;`, // Используем созданную базу данных
 
     // Таблица ingredients
@@ -20,7 +20,7 @@ const sqlQueries = [
       \`id\` INT(11) NOT NULL AUTO_INCREMENT,
       \`ingredient\` VARCHAR(50) NOT NULL,
       PRIMARY KEY (\`id\`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB;
   `,
 
     // Таблица recipes
@@ -30,7 +30,7 @@ const sqlQueries = [
       \`recipe_name\` VARCHAR(50) NOT NULL,
       \`recipe_description\` VARCHAR(255) DEFAULT NULL,
       PRIMARY KEY (\`id\`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB;
   `,
 
     // Таблица recipe_ingredients (связующая таблица)
@@ -42,7 +42,7 @@ const sqlQueries = [
       PRIMARY KEY (\`recipe_id\`, \`ingredient_id\`),
       FOREIGN KEY (\`recipe_id\`) REFERENCES \`recipes\` (\`id\`) ON DELETE CASCADE,
       FOREIGN KEY (\`ingredient_id\`) REFERENCES \`ingredients\` (\`id\`) ON DELETE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB;
   `,
 
     // Таблица users
@@ -51,7 +51,7 @@ const sqlQueries = [
       \`id\` INT(11) NOT NULL AUTO_INCREMENT,
       \`user\` VARCHAR(50) NOT NULL DEFAULT '0',
       PRIMARY KEY (\`id\`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB;
   `,
 
     // Таблица recipe_groups
@@ -60,7 +60,7 @@ const sqlQueries = [
       \`id\` INT(11) NOT NULL AUTO_INCREMENT,
       \`recipe_group\` VARCHAR(50) NOT NULL DEFAULT '0',
       PRIMARY KEY (\`id\`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+    ) ENGINE=InnoDB;
   `,
 ];
 
